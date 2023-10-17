@@ -8,17 +8,17 @@ from flask import Flask, request, jsonify
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 credentials = ServiceAccountCredentials.from_json_keyfile_name('your-credentials.json', scope)
 gc = gspread.authorize(credentials)
-spreadsheet_key = 'your-spreadsheet-key'  # Вставте ключ вашого Google Sheets
+spreadsheet_key = 'analog-campus-402318-167ad4c7367e.json'  # Вставте ключ вашого Google Sheets
 
 # Отримайте доступ до API для отримання курсу валют
-API_URL = 'https://your-currency-api.com'  # Замініть на URL API для отримання курсу валют
+API_URL = 'https://api.monobank.ua/docs/#tag/Publichni-dani:~:text=https%3A//api.monobank.ua/bank/currency'  # Замініть на URL API для отримання курсу валют
 
-app = Flask(__name)
+app = Flask(currency_name)
 
 @app.route('/update_currency', methods=['POST'])
 def update_currency():
-    update_from = request.form.get('update_from', '2023-01-01')
-    update_to = request.form.get('update_to', '2023-02-08')
+    update_from = request.form.get('update_from', '2023-10-01')
+    update_to = request.form.get('update_to', '2023-10-16')
 
     # Отримати курси валют за вказаний період
     params = {'from': update_from, 'to': update_to}
